@@ -33,9 +33,9 @@ jobs:
       name: Docker Build
       runs-on: ubuntu-20.04
       steps:
-      - uses: actions/download-artifact@v2
-        with:
-          name: test.txt
+        - uses: actions/download-artifact@v2
+          with:
+            name: test.txt
         - name: Test02
           id: test02
           shell: bash
