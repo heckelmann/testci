@@ -1,0 +1,40 @@
+on:
+  # always execute docker build when something is pushed to master or release-* branches
+  workflow_dispatch:
+  push:
+    branches:
+      - 'master'
+      - 'release-*'
+  # in addition, execute for pull requests to those branches
+  pull_request:
+    branches:
+      - 'master'
+      - 'release-*'
+
+jobs:
+  job1:
+    name: Test
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Test01
+        id: test01
+        shell: bash
+        run: |
+          echo "Test" > test.txt
+      - name: Upload Helm Chart as an artifact
+        id: upload_helm_chart
+        uses: actions/upload-artifact@v2
+        with:
+          name: test.txt
+          path: test.txt
+
+  docker_build:
+      needs: [job1]
+      name: Docker Build
+      runs-on: ubuntu-20.04
+      steps:
+        - name: Test02
+          id: test02
+          shell: bash
+          run: |
+            ls -latr
