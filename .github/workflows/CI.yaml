@@ -3,7 +3,7 @@ on:
   workflow_dispatch:
   push:
     branches:
-      - 'master'
+      - 'main'
       - 'release-*'
   # in addition, execute for pull requests to those branches
   pull_request:
@@ -21,14 +21,15 @@ jobs:
         if: (github.event_name == 'push') || (github.event_name == 'workflow_dispatch') || (github.event.pull_request.head.repo.full_name == github.repository)
         shell: bash
         run: |
-          echo "Test" > test.txt
+          mkdir test
+          echo "Test" > test/test.txt
           echo "Hello ${{ github.event_name }}!"
       - name: Upload Helm Chart as an artifact
         id: upload_helm_chart
         uses: actions/upload-artifact@v2
         with:
-          name: test.txt
-          path: test.txt
+          name: test
+          path: test/test.txt
 
   docker_build:  
       needs: [job1]
@@ -37,7 +38,7 @@ jobs:
       steps:
         - uses: actions/download-artifact@v2
           with:
-            name: test.txt
+            name: test
         - name: Test02
           id: test02
           shell: bash
