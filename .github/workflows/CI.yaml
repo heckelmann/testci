@@ -21,7 +21,7 @@ jobs:
         shell: bash
         run: |
           echo "Test" > test.txt
-          echo "Hello ${{ github.event.name }}!"
+          echo "Hello ${{ github.event_name }}!"
       - name: Upload Helm Chart as an artifact
         id: upload_helm_chart
         uses: actions/upload-artifact@v2
