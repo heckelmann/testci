@@ -18,6 +18,7 @@ jobs:
     steps:
       - name: Test01
         id: test01
+        if: (github.event_name == 'push') || (github.event_name == 'workflow_dispatch') || (github.event.pull_request.head.repo.full_name == github.repository)
         shell: bash
         run: |
           echo "Test" > test.txt
