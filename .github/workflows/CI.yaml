@@ -24,6 +24,21 @@ jobs:
           mkdir test
           echo "Test" > test/test.txt
           echo "Hello ${{ github.event_name }}!"
+          cat <<EOF >>deploy.json
+          {
+            "contenttype": "application/json",
+            "data": {
+              "project": "demo",
+              "service": "dynatrace-service",
+              "stage": "dev"
+            },
+            "source": "keptn-cli",
+            "specversion": "1.0",
+            "type": "sh.keptn.event.dev.delivery.triggered"
+          }
+          EOF
+          ls -latr
+          cat deploy.json
       - name: Upload Helm Chart as an artifact
         id: upload_helm_chart
         uses: actions/upload-artifact@v2
