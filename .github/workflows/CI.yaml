@@ -21,41 +21,4 @@ jobs:
         if: (github.event_name == 'push') || (github.event_name == 'workflow_dispatch') || (github.event.pull_request.head.repo.full_name == github.repository)
         shell: bash
         run: |
-          mkdir test
-          echo "Test" > test/test.txt
-          echo "Hello ${{ github.event_name }}!"
-          cat <<EOF >>deploy.json
-          {
-            "contenttype": "application/json",
-            "data": {
-              "project": "demo",
-              "service": "dynatrace-service",
-              "stage": "dev"
-            },
-            "source": "keptn-cli",
-            "specversion": "1.0",
-            "type": "sh.keptn.event.dev.delivery.triggered"
-          }
-          EOF
-          ls -latr
-          cat deploy.json
-      - name: Upload Helm Chart as an artifact
-        id: upload_helm_chart
-        uses: actions/upload-artifact@v2
-        with:
-          name: test
-          path: test/*.txt
-
-  docker_build:  
-      needs: [job1]
-      name: Docker Build
-      runs-on: ubuntu-20.04
-      steps:
-        - uses: actions/download-artifact@v2
-          with:
-            name: test
-        - name: Test02
-          id: test02
-          shell: bash
-          run: |
-            ls -latr
+          aws --version
